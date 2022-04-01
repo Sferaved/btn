@@ -2,16 +2,16 @@
 
 namespace app\controllers;
 
-use app\models\News;
-use app\models\NewsSearch;
+use app\models\Btn;
+use app\models\BtnSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * NewsController implements the CRUD actions for News model.
+ * BtnController implements the CRUD actions for Btn model.
  */
-class NewsController extends Controller
+class BtnController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,13 +32,13 @@ class NewsController extends Controller
     }
 
     /**
-     * Lists all News models.
+     * Lists all Btn models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new NewsSearch();
+        $searchModel = new BtnSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,57 +48,32 @@ class NewsController extends Controller
     }
 
     /**
-     * Displays a single News model.
+     * Displays a single Btn model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-		$model=News::find()->where(['=','id',$id])->one();
-		$model->time = time ();
-		$model-> save ();
+        $model=Btn::find()->where(['=','id',$id])->one();
 		
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
     }
 
     /**
-     * Creates a new News model.
+     * Creates a new Btn model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new News();
-		$model->time = time ();
+        $model = new Btn();
+        $model->time = date('Y-m-d H:i:s');
 	
-		$file = "..//words_alpha.txt";
-		// Convert the text fle into array and get text of each line in each array index
-		$file_arr = file($file);
-		// Total number of lines in file
-		$num_lines = count($file_arr);
-		// Getting the last array index number
-		$last_arr_index = $num_lines - 1;
-
-		for ($i = 1; $i <= 10; $i++) {
-			echo $i;
-			
-			// Random index number
-			$rand_index = rand(0, $last_arr_index);
-
-			// random text from a line. The line will be a random number within the indexes of the array
-		   $rand_text =$rand_text." ".$file_arr[$rand_index];
-
-			
-		}
-		
-		//echo $rand_text;
-        $model->content	 = $rand_text;
-		
-		
-		
+    	
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -113,7 +88,7 @@ class NewsController extends Controller
     }
 
     /**
-     * Updates an existing News model.
+     * Updates an existing Btn model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -133,7 +108,7 @@ class NewsController extends Controller
     }
 
     /**
-     * Deletes an existing News model.
+     * Deletes an existing Btn model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -147,15 +122,15 @@ class NewsController extends Controller
     }
 
     /**
-     * Finds the News model based on its primary key value.
+     * Finds the Btn model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return News the loaded model
+     * @return Btn the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = News::findOne(['id' => $id])) !== null) {
+        if (($model = Btn::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
