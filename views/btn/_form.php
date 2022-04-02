@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use dosamigos\datepicker\DatePicker;
+
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Btn */
@@ -13,24 +13,13 @@ use dosamigos\datepicker\DatePicker;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'time')->widget(
-    DatePicker::class, 
-    [
-        'model' => $model,
-                'value' => $model->time,
-                'attribute' => 'date',
-                'language' => 'ru',
-                
-                'options' => ['placeholder' => 'Выбрать дату'],
-                'template' => '{addon}{input}',
-                'clientOptions' => [
-                    'autoclose' => true,
-                    'todayHighlight' => true,
-                    'format' => 'yyyy-mm-dd'
-    ]
-    ]); ?>
+    <?= $form->field($model, 'time')->textInput(); ?>
 
-    <?= $form->field($model, 'curency')->textInput() ?>
+
+    <?= $form->field($model, 'curency')->textInput() ->dropDownList([
+		'USD' => 'USD',
+		'Bitcoin' => 'Bitcoin',
+	]); ?>
 
     <?= $form->field($model, 'summa')->textInput() ?>
 

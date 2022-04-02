@@ -41,9 +41,106 @@ class BtnController extends Controller
         $searchModel = new BtnSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('index', [
+        $models = $dataProvider->getModels(); // Таблица отбранных записей
+ 	
+     //////////// USD      
+     //curency	
+        foreach ($models  as $value) (             
+            $curency[$value->id] = $value->curency
+        );
+
+
+        //Time		
+                 foreach ($models  as $value) (             
+                    $categories[$value->id] = date('d.m.Y',strtotime($value->time))
+                );
+     
+        //summa	
+        foreach ($models  as $value) (           
+            $summa[$value->id] = $value->summa
+        );
+
+        
+    if ($curency !== null){
+
+        $value_to_delete = 'BITCOIN' ; //Элемент с этим значением нужно удалить
+        $curency = array_flip($curency); //Меняем местами ключи и значения
+        unset ($curency[$value_to_delete]) ; //Удаляем элемент массива
+        $curency = array_flip($curency); //Меняем местами ключи и значения
+      
+        $array= array_keys($curency); //Масив исключаемых ключей
+   
+         ?>
+            <pre>
+            <?php
+            print_r ($array);
+        
+            ?>
+            </pre>
+            <?php  
+
+
+
+    foreach ($array as $value) {
+   
+             unset($categories[$value]);
+             unset($summa[$value]);
+      
+    }
+ 
+    $categories=array_values($categories);
+ 
+    $summa=array_values($summa);
+    $series =  ['name' => 'USD', 'data' => $summa];
+    }
+    
+     
+  
+    //////////// BITCOIN   
+
+    //curency	
+    foreach ($models  as $value) (             
+        $curency[$value->id] = $value->curency
+    );
+
+
+    //Time		
+            foreach ($models  as $value) (             
+                $categories[$value->id] = date('d.m.Y',strtotime($value->time))
+            );
+
+    //summa	
+    foreach ($models  as $value) (           
+        $summa[$value->id] = $value->summa
+    );
+
+    if ($curency !== null){
+     $value_to_delete = 'USD' ; //Элемент с этим значением нужно удалить
+     $curency = array_flip($curency); //Меняем местами ключи и значения
+     unset ($curency[$value_to_delete]) ; //Удаляем элемент массива
+     $curency = array_flip($curency); //Меняем местами ключи и значения
+   
+     $array= array_keys($curency); //Масив исключаемых ключей
+
+    foreach ($array as $value) {
+
+            unset($categories[$value]);
+            unset($summa[$value]);
+    
+    }
+
+    $categories=array_values($categories);
+
+    $summa=array_values($summa);
+    $series =  ['name' => 'USD', 'data' => $summa];
+
+    }
+    
+    return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'series' => $series,
+            'categories' => $categories,
         ]);
     }
 

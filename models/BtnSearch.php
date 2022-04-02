@@ -62,7 +62,7 @@ class BtnSearch extends Btn
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-        $dataProvider->pagination->pageSize=5; // Количество строк в таблице
+    //    $dataProvider->pagination->pageSize=5; // Количество строк в таблице
         $this->load($params);
 
         if (!$this->validate()) {

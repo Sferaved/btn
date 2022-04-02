@@ -48,16 +48,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
     echo Highcharts::widget([
     'options' => [
-        'title' => ['text' => 'Fruit Consumption'],
+        'title' => ['text' => 'Tabl BTС'],
         'xAxis' => [
-            'categories' => ['Apples', 'Bananas', 'Oranges']
+            'categories' => $categories
         ],
         'yAxis' => [
-            'title' => ['text' => 'Fruit eaten']
+            'title' => ['text' => 'Dollars from the day']
         ],
-        'series' => [
-            ['name' => 'Jane', 'data' => [1, 0, 4]],
-            ['name' => 'John', 'data' => [5, 7, 3]]
+         'series' => [
+            $series,
         ]
     ]
     ]);
